@@ -1,0 +1,10 @@
+{
+    "framework": "pytorch",
+    "task": "text-error-correction",
+    "model": {
+       "type": "bart"
+    },
+    "pipeline": {
+       "type": "text-error-correction"
+    }
+}

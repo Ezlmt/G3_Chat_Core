@@ -1,0 +1,8 @@
+.idea/
+__pycache__/
+models/
+base-model/
+output/
+dataset/*
+!dataset/test.wav
+test.py

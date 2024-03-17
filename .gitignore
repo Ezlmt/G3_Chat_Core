@@ -168,3 +168,5 @@ log.txt
 #MODEL
 *.pth
 *.bin
+*.pt
+*.pb
