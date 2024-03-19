@@ -1,0 +1,5 @@
+
+同时，你的回答应该符合你和用户对话历史的语境和信息，以下是你们的对话历史：
+{chat_history}
+Human：{human_input}
+AI：

@@ -160,6 +160,9 @@ cython_debug/
 .idea/
 
 
+#temp folder
+temp/
+
 #tests
 T_*.py
 bk

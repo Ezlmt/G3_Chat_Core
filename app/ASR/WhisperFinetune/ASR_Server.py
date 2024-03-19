@@ -6,6 +6,9 @@ import os
 from io import BytesIO
 
 import uvicorn
+from modelscope.pipelines import pipeline
+from modelscope.utils.constant import Tasks
+from modelscope.hub.snapshot_download import snapshot_download
 from fastapi import FastAPI, BackgroundTasks, File, Body, UploadFile, Request,APIRouter
 from fastapi.responses import StreamingResponse
 from fastapi.logger import logger
@@ -36,6 +39,10 @@ asr_router = APIRouter()
 templates = Jinja2Templates(directory=templates_file_path)
 model_semaphore = None
 
+# 建立标点预测 pipeline
+# punc_ct_path = snapshot_download('iic/punc_ct-transformer_cn-en-common-vocab471067-large', cache_dir=current_dir_path+"\\models")
+# print(f"punc_model: {punc_ct_path}")
+# punc_ct_pipeline = pipeline(Tasks.punctuation,model=punc_ct_path,model_revision="v2.0.4")
 
 
 # 检查模型文件是否存在
@@ -53,6 +60,8 @@ else:
                          local_files_only=local_files_only)
 # 预热
 _, _ = model.transcribe(current_dir_path+"\\dataset\\test.wav", beam_size=5)
+# punc_ct_pipeline("这是一个测试案例")
+
 
 def release_model_semaphore():
     model_semaphore.release()
@@ -108,6 +117,7 @@ async def api_recognition(to_simple: int = Body(1, description="是否繁体转�
     for output in generator:
         output = json.loads(output[:-1].decode("utf-8"))
         results.append(output)
+        # sentence += punc_ct_pipeline(output["result"])[0]['text']
         sentence += output["result"]
     ret = {"text":sentence,"segments": results,"language":language}
     return ret

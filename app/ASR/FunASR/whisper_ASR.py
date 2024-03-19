@@ -61,6 +61,7 @@ import logging
 
 bart_path = snapshot_download('damo/nlp_bart_text-error-correction_chinese', cache_dir=local_dir_root)
 punc_ct_path = snapshot_download('iic/punc_ct-transformer_cn-en-common-vocab471067-large', cache_dir=local_dir_root)
+print(punc_ct_path)
 
 # 建立 文本纠错、标点预测 pipeline
 word_fix_pipeline = pipeline(Tasks.text_error_correction, model=bart_path, model_revision='v1.0.1')
