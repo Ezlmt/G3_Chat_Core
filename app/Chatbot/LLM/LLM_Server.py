@@ -30,7 +30,7 @@ async def update_char(request: Request, char_instance = Depends(get_character_in
     CharName = data['name']
     char_instance.updateChar(CharName)
 
-@llm_router.websocket("/ws")
+@llm_router.websocket("/sparkws")
 async def websocket_endpoint(
         websocket: WebSocket,
         char_instance = Depends(get_character_instance),
@@ -51,29 +51,32 @@ async def websocket_endpoint(
 
     while True:
         logger.info(f"websocket.accept")
+        answer = ""
+        # 接收用户查询
+        message = await websocket.receive()
+        message_type = message["type"]
+        # 根据接受到的数据类型，对接收信息进行解析
+        if message_type == "websocket.receive":
+            receive_msg = message.get("bytes") or message.get("text")
+            if isinstance(receive_msg,bytes):
+                data = receive_msg.decode('utf-8')
+            elif isinstance(receive_msg,str):
+                data = receive_msg
+        elif message_type == "websocket.disconnect":
+            logger.info(f"websocket.disconnect")
+            break
+        # data = await websocket.receive_text()
+        logger.info(f"收到提问: {data}")
+        # 在这里与LLM交互，获取iterator chunks，存储流式回复
         try:
-            answer = ""
-            # 接收用户查询
-            data = await websocket.receive_text()
-            logger.info(f"收到提问: {data}")
-            # 在这里与LLM交互，获取iterator chunks，存储流式回复
-            try:
-                chunks = SparkChat_instance.run_chat_stream(data)
-            except Exception as e:
-                logger.info(f"请求异常: {e}")
-                chunks = '你说的我不太了解啦，你可以换一种方式说吗？'
-            for chunk in chunks:
-                answer += chunk
-                await websocket.send_text(chunk)
-                await asyncio.sleep(0)
-            logger.info(f"角色回复：{answer}")
-            # 发送结束，发送quit标志
-            await websocket.send_text("quit")
-        except WebSocketDisconnect:
-            logger.info("WebSocketDisconnect")
-            break
-        except ConnectionClosedOK:
-            logger.info("ConnectionClosedOK")
-            break
+            chunks = SparkChat_instance.run_chat_stream(data)
         except Exception as e:
-            logger.info(e)
+            logger.info(f"请求异常: {e}")
+            chunks = '你说的我不太了解啦，你可以换一种方式说吗？'
+        for chunk in chunks:
+            answer += chunk
+            await websocket.send_text(chunk)
+            await asyncio.sleep(0)
+        logger.info(f"角色回复：{answer}")
+        # 发送结束，发送quit标志
+        await websocket.send_text("quit")
