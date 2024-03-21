@@ -69,7 +69,7 @@ def release_model_semaphore():
 # 进行语音识别的函数
 def recognition(file: File, to_simple: int, remove_pun: int, language: str = "zh", task: str = "transcribe"):
     # beam_size被设置为10，即束搜索算法会保留10个候选序列进行评分和选择。
-    segments, info = model.transcribe(file, beam_size=10, task=task, vad_filter=vad_filter)
+    segments, info = model.transcribe(file, beam_size=10, task=task, vad_filter=vad_filter,initial_prompt="以下是普通话的句子，这是一段对话的语音。")
     for segment in segments:
         text = segment.text
         if to_simple == 1:
@@ -89,6 +89,7 @@ async def api_recognition_stream(to_simple: int = Body(1, description="是否繁
                                  task: str = Body("transcribe", description="识别任务类型，支持transcribe和translate", embed=True),
                                  audio: UploadFile = File(..., description="音频文件")):
     global model_semaphore
+    print("接收到数据！开始处理...")
     if language == "None": language = None
     if model_semaphore is None:
         model_semaphore = asyncio.Semaphore(5)
@@ -98,6 +99,7 @@ async def api_recognition_stream(to_simple: int = Body(1, description="是否繁
     generator = recognition(file=data, to_simple=to_simple, remove_pun=remove_pun, language=language, task=task)
     background_tasks = BackgroundTasks()
     background_tasks.add_task(release_model_semaphore)
+    print("完成数据处理！开始进行数据推送...")
     # 返回一个iterator，进行流式返回。
     return StreamingResponse(generator, background=background_tasks)
 
