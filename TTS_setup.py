@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.TTS.BertVITS2.server_fastapi import tts_router,logger
-# from app.ASR.WhisperFinetune.ASR_Server import asr_router
+# from app.ASR.Whisper.ASR_Server import asr_router
 from app.configs import base_config
 import uvicorn
 import webbrowser

@@ -8,7 +8,7 @@ from app.utils.logger import get_logger
 logger = get_logger(__name__)
 class AppConfig(Singleton):
     def __init__(self):
-        # 初始化命令行参数
+     # 初始化命令行参数
         parser = argparse.ArgumentParser(description="Just an example",
                                          formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument("-n", "--name", help="角色英文名称.", default="shulaibao")
@@ -26,7 +26,7 @@ class AppConfig(Singleton):
         self.proj_dir = str(project_dir)
         self.config_path = os.path.join(self.proj_dir,args.config)
 
-        # 初始化config.ini中变量
+    # 初始化config.ini中变量
         config = configparser.ConfigParser()
         self.config_files = config.read(self.config_path, 'utf-8')
         if len(self.config_files) == 0:
@@ -37,9 +37,10 @@ class AppConfig(Singleton):
         self.asr_port = get_config_variable(config, ['RouterSetting', 'asrPort'])
         self.tts_port = get_config_variable(config, ['RouterSetting', 'ttsPort'])
 
-        # AsrSetting
-        self.asr_model_path = get_config_variable(config,['AsrSetting','asrModelPath'])
-        self.asr_model_path = os.path.join(self.proj_dir,self.asr_model_path)
+    # AsrSetting
+        self.asr_model_path = get_config_variable(config,['AsrSetting','asr_model_path'])
+        # Faster-Whisper
+        self.whisper_asr_model = get_config_variable(config,['AsrSetting','whisper_asr_model'])
         self.use_gpu = get_config_variable(config, ['AsrSetting', 'use_gpu'])
         self.use_int8 = get_config_variable(config, ['AsrSetting', 'use_int8'])
         self.beam_size = get_config_variable(config, ['AsrSetting', 'beam_size'])
@@ -47,10 +48,21 @@ class AppConfig(Singleton):
         self.vad_filter = get_config_variable(config, ['AsrSetting', 'vad_filter'])
         self.local_files_only = get_config_variable(config, ['AsrSetting', 'local_files_only'])
 
-        #CharacterSetting
+        # FunASR
+        self.ali_asr_model = get_config_variable(config, ['AsrSetting', 'ali_asr_model'])
+        self.ali_punc_model = get_config_variable(config, ['AsrSetting', 'ali_punc_model'])
+        self.ali_vad_model = get_config_variable(config, ['AsrSetting', 'ali_vad_model'])
+        self.ali_asr_online_model = get_config_variable(config, ['AsrSetting', 'ali_asr_online_model'])
+        self.ali_model_revision = get_config_variable(config, ['AsrSetting', 'ali_model_revision'])
+        self.ngpu = get_config_variable(config, ['AsrSetting', 'ngpu'])
+        self.device = get_config_variable(config, ['AsrSetting', 'device'])
+        self.ncpu = get_config_variable(config, ['AsrSetting', 'ncpu'])
+
+
+    #CharacterSetting
         self.CharNameDic = get_config_variable(config, ['CharNameList'], default={}, return_type=dict)
 
-        #LLMConfigs
+    #LLMConfigs
         self.LLMNameDic = get_config_variable(config, ['LLM'], default={}, return_type=dict)
         self.LLMModelNameDic = get_config_variable(config, ['MODEL'], default={}, return_type=dict)
         # SPARK LLM CONFIGS
@@ -59,7 +71,7 @@ class AppConfig(Singleton):
         if self.LLMModelName not in self.LLMModelNameDic:
             self.LLMModelName = "V3"
 
-        #LLMSetting
+    #LLMSetting
         self.SPARKAPIDomain_v2 = get_config_variable(config,['LLMSetting','SPARKAPIDomain_v2'])
         self.SPARKAPIDomain_v3 = get_config_variable(config, ['LLMSetting', 'SPARKAPIDomain_v3'])
         self.sparkDomain_v2 = get_config_variable(config, ['LLMSetting', 'sparkDomain_v2'])
@@ -69,14 +81,14 @@ class AppConfig(Singleton):
         self.SPARK_API_SECRET = get_config_variable(config, ['LLMSetting', 'SPARK_API_SECRET'])
 
 
-        #Const data
+    #Const data
         self.VECTOR_SEARCH_TOP_K = get_config_variable(config, ['const_data', 'TOP_K'], default=1, return_type=int)
         self.MEMORY_LENGTH = get_config_variable(config, ['const_data', 'MemoryLength'], default=1, return_type=int)
         self.ConversationSplitSTR = get_config_variable(config, ['const_data', 'ConversationSplitSTR'], default='$\t$')
         self.local_embed_model = get_config_variable(config, ['const_data', 'local_embed_model'])
         self.Model_DIR = get_config_variable(config, ['const_data', 'Embed_Model_Dir'])
 
-        #PromptTemplate
+    #PromptTemplate
         self.DataRootPath = get_config_variable(config, ['PromptTemplate', 'DataRootPath'])
         self.CharDataPath = get_config_variable(config, ['PromptTemplate', 'CharDataPath'])
         self.TemplatePath = get_config_variable(config, ['PromptTemplate', 'TemplatePath'])

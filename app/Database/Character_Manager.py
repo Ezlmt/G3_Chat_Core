@@ -24,7 +24,7 @@ class CharacterManager(Singleton):
 
         # character 绝对路径
         self.CharDataPath = os.path.join(self.app_config.proj_dir,self.app_config.DataRootPath,self.app_config.CharDataPath)
-        self.embedding = embedManager(os.path.join(config.Model_DIR, config.local_embed_model), self.app_config)
+        self.embedding = embedManager(os.path.join(config.proj_dir,config.Model_DIR, config.local_embed_model), self.app_config)
         self.SEARCH_TOP_K = config.VECTOR_SEARCH_TOP_K
         self.updateChar(character_name)
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.ASR.WhisperFinetune.ASR_Server import asr_router,static_file_path,templates_file_path
+from app.ASR.Whisper.ASR_Server import asr_router,static_file_path,templates_file_path
 from app.configs import base_config
 import uvicorn
 import webbrowser

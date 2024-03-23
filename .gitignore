@@ -162,6 +162,9 @@ cython_debug/
 
 #temp folder
 temp/
+app/ASR/FunASR/
+models/
+
 
 #tests
 T_*.py
