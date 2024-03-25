@@ -94,7 +94,9 @@ if args.output_dir is not None:
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
 
-
+"""
+   从 麦克风 进行实时识别
+"""
 async def record_microphone():
     is_finished = False
     import pyaudio
@@ -105,7 +107,7 @@ async def record_microphone():
     RATE = 16000
     chunk_size = 60 * args.chunk_size[1] / args.chunk_interval
     CHUNK = int(RATE / 1000 * chunk_size)
-
+    print(CHUNK)
     p = pyaudio.PyAudio()
 
     stream = p.open(format=FORMAT,
@@ -160,10 +162,17 @@ async def record_microphone():
     while True:
         data = stream.read(CHUNK)
         message = data
+        # print(len(data))
+        lent = len(data) // 2
+        message1 = data[0:lent]
+        message2 = data[lent:]
         #voices.put(message)
         await websocket.send(message)
         await asyncio.sleep(0.005)
 
+"""
+   从 文件 进行识别
+"""
 async def record_from_scp(chunk_begin, chunk_size):
     global voices
     is_finished = False
@@ -283,11 +292,12 @@ async def message(id):
         ibest_writer = open(os.path.join(args.output_dir, "text.{}".format(id)), "a", encoding="utf-8")
     else:
         ibest_writer = None
-    try:
-       while True:
-        
+    # try:
+    while True:
+
             meg = await websocket.recv()
             meg = json.loads(meg)
+            # print(meg)
             wav_name = meg.get("wav_name", "demo")
             text = meg["text"]
             timestamp=""
@@ -309,6 +319,7 @@ async def message(id):
                 text_print = text_print[-args.words_max_print:]
                 os.system('clear')
                 print("\rpid" + str(id) + ": " + text_print)
+                pass
             elif meg["mode"] == "offline":
                 if timestamp !="":
                     text_print += "{} timestamp: {}".format(text, timestamp)
@@ -319,6 +330,7 @@ async def message(id):
                 # os.system('clear')
                 print("\rpid" + str(id) + ": " + wav_name + ": " + text_print)
                 offline_msg_done = True
+                pass
             else:
                 if meg["mode"] == "2pass-online":
                     text_print_2pass_online += "{}".format(text)
@@ -327,13 +339,17 @@ async def message(id):
                     text_print_2pass_online = ""
                     text_print = text_print_2pass_offline + "{}".format(text)
                     text_print_2pass_offline += "{}".format(text)
+                # 选择2pass，则是由online实时输出，但是不够准确，而且不带标点符号
+                # offline则负责 更加准确 并且 附带标点的输出
+                # 之后会用 offline的识别内容 去替代 之前的识别内容
+                # 从而做到准确的输出，因此2pass online和offline同样都很重要
                 text_print = text_print[-args.words_max_print:]
                 os.system('clear')
                 print("\rpid" + str(id) + ": " + text_print)
-                # offline_msg_done=True
+                offline_msg_done=True
 
-    except Exception as e:
-            print("Exception:", e)
+    # except Exception as e:
+    #         print("Exception:", e)
             #traceback.print_exc()
             #await websocket.close()
  
