@@ -72,7 +72,8 @@ async def websocket_endpoint(
             chunks = SparkChat_instance.run_chat_stream(data)
         except Exception as e:
             logger.info(f"请求异常: {e}")
-            chunks = '你说的我不太了解啦，你可以换一种方式说吗？'
+            chunks = []
+            chunks.append('你说的我不太了解啦，你可以换一种方式说吗？')
         for chunk in chunks:
             answer += chunk
             await websocket.send_text(chunk)

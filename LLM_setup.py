@@ -25,7 +25,7 @@ llm_app.include_router(llm_router)
 
 if __name__ == '__main__':
     logger.warning("SparkLLM服务，请勿将服务端口暴露于外网")
-    logger.info(f"WebAPI地址: http://127.0.0.1:{7980}")
+    logger.info(f"WebAPI地址: wss://127.0.0.1:{7980}")
     print("\n-------------------------LLM服务启动完毕-----------------------------\n")
     uvicorn.run(
         llm_app, port=int(7980), host="0.0.0.0", log_level="warning"

@@ -16,7 +16,7 @@ import ssl
 from modelscope import snapshot_download
 from funasr import AutoModel
 
-funasr_router = FastAPI()
+funasr_router = APIRouter()
 base_config = get_config_instance()
 
 # 从 config.ini 中读取基本的配置信息
