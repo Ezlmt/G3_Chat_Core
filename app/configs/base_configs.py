@@ -8,7 +8,7 @@ from app.utils.logger import get_logger
 logger = get_logger(__name__)
 class AppConfig(Singleton):
     def __init__(self):
-     # 初始化命令行参数
+        # 初始化命令行参数
         parser = argparse.ArgumentParser(description="Just an example",
                                          formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument("-n", "--name", help="角色英文名称.", default="shulaibao")
@@ -26,7 +26,7 @@ class AppConfig(Singleton):
         self.proj_dir = str(project_dir)
         self.config_path = os.path.join(self.proj_dir,args.config)
 
-    # 初始化config.ini中变量
+        # 初始化config.ini中变量
         config = configparser.ConfigParser()
         self.config_files = config.read(self.config_path, 'utf-8')
         if len(self.config_files) == 0:
@@ -37,7 +37,7 @@ class AppConfig(Singleton):
         self.asr_port = get_config_variable(config, ['RouterSetting', 'asrPort'])
         self.tts_port = get_config_variable(config, ['RouterSetting', 'ttsPort'])
 
-    # AsrSetting
+        # AsrSetting
         self.asr_model_path = get_config_variable(config,['AsrSetting','asr_model_path'])
         # Faster-Whisper
         self.whisper_asr_model = get_config_variable(config,['AsrSetting','whisper_asr_model'])
@@ -58,11 +58,13 @@ class AppConfig(Singleton):
         self.device = get_config_variable(config, ['AsrSetting', 'device'])
         self.ncpu = get_config_variable(config, ['AsrSetting', 'ncpu'])
 
+        # TextClassification
+        self.order_class_model=get_config_variable(config, ['OrderSetting', 'order_class_model'])
 
-    #CharacterSetting
+        #CharacterSetting
         self.CharNameDic = get_config_variable(config, ['CharNameList'], default={}, return_type=dict)
 
-    #LLMConfigs
+        #LLMConfigs
         self.LLMNameDic = get_config_variable(config, ['LLM'], default={}, return_type=dict)
         self.LLMModelNameDic = get_config_variable(config, ['MODEL'], default={}, return_type=dict)
         # SPARK LLM CONFIGS
@@ -97,6 +99,7 @@ class AppConfig(Singleton):
         self.ChatPresetTemplate = get_config_variable(config, ['PromptTemplate', 'ChatPresetTemplate'])
         self.EmbedTemplate = get_config_variable(config, ['PromptTemplate', 'EmbedTemplate'])
         self.LLMTemplate = get_config_variable(config, ['PromptTemplate', 'LLMTemplate'])
+        self.OrdersTemplate = get_config_variable(config,['PromptTemplate', 'OrdersTemplate'])
 
 
         def validate_config(self):

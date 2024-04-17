@@ -35,7 +35,8 @@ class CharacterManager(Singleton):
         self.conversation_file = f"{self.character_name}_conversation.txt"
         self.knowledge_file = f"{self.character_name}_knowledge.txt"
         self.prompt_file = f"{self.character_name}_prompt.txt"
-
+        self.orders_file = f"{self.character_name}_orders.json"
+        self.OrderFilePath = os.path.join(self.CharDataPath, self.character_name, self.orders_file)
     def update_templates(self):
         """
         根据当前角色设置，更新templates需要文件的路径。

@@ -208,7 +208,6 @@ class SparkChatService(Singleton):
             logger.warning(f"{targetModel}为非法LLM名称，切换失败。")
 
 
-
 def get_spark_instance() -> SparkChatService:
     return SparkChatService.get_instance()
 
