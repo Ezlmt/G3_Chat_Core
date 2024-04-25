@@ -191,17 +191,22 @@ async def ws_serve(websocket: WebSocket):
             receive_counts = receive_counts + 1
             # 因为 C# Websocket 只能发送 bytes 格式的数据，所以要判断是否为json格式，并且包含 is_speaking
             if isinstance(message,bytes):
+                decodeValidation = False
                 try:
                     # 如果可以按照utf-8编码解码，说明是 json string
-                    message = message.decode('utf-8')
-                    print("解码成功！！！",message)
+                    temp_message = message.decode('utf-8')
+                    temp_message_json = json.loads(message)
+                    print("解码成功！",temp_message)
+                    decodeValidation = True
                     # print(f"[msg-{receive_counts}] 接收到config数据...")
                 except:
+                    print("解码失败，是音频数据！")
                     audio_list.append(message)
                     # 如果不可以，说明是音频数据
                     # print(f"[msg-{receive_counts}] 接收到音频数据...")
                     pass
-
+        if decodeValidation:
+            message = temp_message
         # 判断收到的是不是第一帧，用于初始化音频处理信息
         if isinstance(message,str):
             messagejson = json.loads(message)
