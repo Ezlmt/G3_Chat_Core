@@ -95,6 +95,7 @@ def voice(
     auto_translate: bool = Query(False, description="自动翻译"),
     auto_split: bool = Query(False, description="自动切分"),
 ):
+    print("接收到get请求，正在合成语音...")
     """语音接口"""
     text = text.text
     logger.info(

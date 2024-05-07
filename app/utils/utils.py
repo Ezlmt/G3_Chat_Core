@@ -139,3 +139,11 @@ def contains_only_punctuation(sentence, punctuation_list):
         return True
     else:
         return False
+
+"""
+获取本机IP地址
+"""
+def GetIPaddress():
+    import socket
+    hostname = socket.gethostname()
+    return socket.gethostbyname(hostname)

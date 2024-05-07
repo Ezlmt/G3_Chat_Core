@@ -4,6 +4,7 @@ from app.Chatbot.LLM.Spark import SparkChatService
 from app.Database.Character_Manager import CharacterManager
 from app.configs import base_config,AppConfig
 from app.utils.logger import get_logger
+from app.utils.utils import GetIPaddress
 import uvicorn
 import webbrowser
 
