@@ -162,9 +162,11 @@ cython_debug/
 
 #model folder
 temp/
-models/asr/
-models/tts/
-models/llm/
+models/asr/faster-whisper
+models/asr/iic
+models/tts/dienstag
+models/llm/damo
+models/llm/Jerry0
 app/TTS/BertVITS2v202/Data/meimei/models/eval
 
 #tests
