@@ -25,7 +25,7 @@ server:
   - config: Data\meimei\config.json
     device: cuda
     language: ZH
-    model: Data\meimei\models\G_3550.pth
+    model: Data\meimei\models\G_WangBingBing.pth
     speakers:
     - length_scale: 1
       noise_scale: 0.6
@@ -69,6 +69,6 @@ webui:
   debug: false
   device: cuda
   language_identification_library: langid
-  model: models/G_3550.pth
+  model: models/G_WangBingBing.pth
   port: 7860
   share: false
