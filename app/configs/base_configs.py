@@ -101,7 +101,9 @@ class AppConfig(Singleton):
         self.LLMTemplate = get_config_variable(config, ['PromptTemplate', 'LLMTemplate'])
         self.OrdersTemplate = get_config_variable(config,['PromptTemplate', 'OrdersTemplate'])
 
-
+    #TtsSetting
+        self.TTSBertModelPath = get_config_variable(config,['TtsSetting', 'TTSBertModel'])
+        self.TTSModelDir = get_config_variable(config,['TtsSetting','TTSModelDir'])
         def validate_config(self):
             attributes = vars(self)  # 获取类实例的所有属性和值
             for attr, value in attributes.items():

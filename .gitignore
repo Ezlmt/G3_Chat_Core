@@ -160,11 +160,12 @@ cython_debug/
 .idea/
 
 
-#temp folder
+#model folder
 temp/
-app/ASR/FunASR/
-models/
-
+models/asr/
+models/tts/
+models/llm/
+app/TTS/BertVITS2v202/Data/meimei/models/eval
 
 #tests
 T_*.py

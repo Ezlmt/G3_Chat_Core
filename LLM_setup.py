@@ -1,3 +1,14 @@
+# 一、先下载bert模型
+from modelscope import snapshot_download
+from app.configs import base_config
+import os
+# 先确定有Bert模型
+local_path = os.path.dirname(__file__)
+print(os.path.join(local_path,base_config.Model_DIR))
+snapshot_download(base_config.local_embed_model.replace("\\","/"),cache_dir=os.path.join(local_path,base_config.Model_DIR))
+
+
+# 二、开始加载Router并启动服务
 from fastapi import FastAPI
 from app.Chatbot.LLM.LLM_Server import llm_router
 from app.Chatbot.LLM.Spark import SparkChatService

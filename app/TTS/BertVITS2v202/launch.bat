@@ -1,0 +1,1 @@
+call venv\python.exe server_fastapi.py
