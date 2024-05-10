@@ -162,7 +162,6 @@ cython_debug/
 
 #model folder
 temp/
-models/asr/faster-whisper
 models/asr/iic
 models/tts/dienstag
 models/llm/damo
