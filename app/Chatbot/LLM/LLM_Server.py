@@ -9,7 +9,6 @@ from fastapi.responses import FileResponse
 import json
 from app.Database.Character_Manager import get_character_instance
 import websocket
-from starlette.templating import Jinja2Templates
 from websockets.exceptions import ConnectionClosedOK
 import re
 import requests
