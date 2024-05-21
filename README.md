@@ -1,10 +1,20 @@
-**欢迎来到 G3-ChatBot**
+# 欢迎来到 G3-ChatBot-SHULaiBao
 
----
+<div style="text-align:center">
+   <img src="./Resources/shulaibao.jpg" width="300" height="300">
+</div>
 
-![OIG1 (1).jpg](https://cdn.nlark.com/yuque/0/2024/jpeg/35563017/1716112845253-fdeb73cc-a232-4701-978d-32d10f7750a4.jpeg#averageHue=%23c49982&clientId=u16a906dc-9749-4&from=drop&height=301&id=ued54d027&originHeight=1024&originWidth=1024&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=147984&status=done&style=shadow&taskId=u1e18b92e-7519-405c-b27d-6be9b0a94b1&title=&width=301)
-<a name="sdgrb"></a>
-# 🤔QuickStart
+# 🤗项目介绍
+本项目基于**Paraformer**、**Bert-VITS2**、**星火大模型**等模型实现了一套针对**虚拟角色交互系统**的服务端开发工作。默认使用角色名称为**鼠来宝**。
+支持内容：
+
+- 通过**Modelscope**调用达摩院**Paraformer**，如需提高识别精度，可在`config.ini`中修改模型名称或在`app\ASR\Paraformer\funasr_wss_server.py`，中修改识别流程。
+- 更换声音模型，参考下方**配置修改**部分流程。
+
+**本项目涉及模型均可通过Modelscope平台自行下载，但声音模型可自行添加。通过整合包安装则默认携带两个声音模型。**
+
+
+# 👉快速启动
 
 
 <a name="MsAF8"></a>
@@ -22,7 +32,7 @@
 2. 执行`pip install -r requirements.txt`，下载所需包文件
 3. 在终端中执行`xxx_setup.py`文件，以启动对应的服务
 <a name="LyWuy"></a>
-# 🤗配置修改
+# 🤔配置修改
 
 
 - 有关**本项目的主要配置信息**保存在根目录的`config.ini`文件中，如**模型名称**、**文件路径**、**路由设置**等。（ip地址在`_setup.py`中自动获取）
