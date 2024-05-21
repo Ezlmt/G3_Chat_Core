@@ -11,7 +11,7 @@
 ## 一、整合包
 
 
-1. 通过以下链接下载整合包内容：``
+1. 通过以下链接下载整合包内容：`链接：https://pan.baidu.com/s/1_kg6O9k_5eNLZpoNZYSxnQ?pwd=2x6b`
 2. 解压整合包
 3. 通过项目根目录的`.bat`文件启动服务
 <a name="PtdTi"></a>
@@ -35,7 +35,7 @@
 
 1. 在`data\character`目录下创建**角色名称文件夹**，如`shulaibao`（可以复制修改自其他角色文件夹）
 2. 文件夹需包含`_conversation.txt`、`_knowledge.txt`、`_orders.json`、`_prompt.txt`
-   1. `conversation.txt`文件需要注意**分隔符**！可以从其他语句复制，修改两端($)内容
-   2. `knowledge.txt`文件中知识条目以**回车**进行分割
+   1. `_conversation.txt`文件需要注意**分隔符**！可以从其他语句复制，修改两端($)内容
+   2. `_knowledge.txt`文件中知识条目以**回车**进行分割
    3. `_prompt.txt`主要用于设置角色的人设
    4. `_orders.json`用于设置指令,如需有,请按照**领域细分**的方式进行设置
