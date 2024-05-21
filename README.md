@@ -6,12 +6,10 @@
 <a name="sdgrb"></a>
 # 🤔QuickStart
 
----
 
 <a name="MsAF8"></a>
 ## 一、整合包
 
----
 
 1. 通过以下链接下载整合包内容：``
 2. 解压整合包
@@ -19,7 +17,6 @@
 <a name="PtdTi"></a>
 ## 二、git下载
 
----
 
 1. 通过`Pycharm`或`Conda`创建虚拟环境
 2. 执行`pip install -r requirements.txt`，下载所需包文件
@@ -27,7 +24,6 @@
 <a name="LyWuy"></a>
 # 🤗配置修改
 
----
 
 - 有关**本项目的主要配置信息**保存在根目录的`**config.ini**`文件中，如**模型名称**、**文件路径**、**路由设置**等。（ip地址在`_setup.py`中自动获取）
 - 关于**声音模型的配置信息**，主要存在放`app\TTS\BertVITS2v202\config.yml`文件的`server`键值对下，包含了模型启动的声音模型信息。
