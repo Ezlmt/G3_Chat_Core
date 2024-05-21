@@ -28,7 +28,7 @@ order_model =snapshot_download(order_model_path,cache_dir=local_dir)
 order_classifier=pipeline('zero-shot-classification',order_model)
 
 # 设置存放query的队列，最大长度为3
-querys = deque(maxlen=3)
+querys = deque(maxlen=1)
 @llm_router.post("/updateChar")
 async def update_char(request: Request, char_instance = Depends(get_character_instance)):
     """
